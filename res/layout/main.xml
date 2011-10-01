@@ -6,32 +6,27 @@
 
 	<TableRow android:gravity="center">
 		<TextView 
-			android:text="@+id/entrada" 
-		    android:layout_weight="4" android:id="@+id/entrada"/>
+			android:text="Entrada" 
+			android:layout_width="fill_parent" />
 		<TextView 
-			android:text="@+id/saida" 
+			android:text="00:00" 
 			android:layout_gravity="right" 
-			android:layout_weight="4" android:id="@+id/saida"/>
+		    android:id="@+id/entrada"/>
 	</TableRow>
-        <TableRow android:gravity="center">
+	
+	<TableRow android:gravity="center">
 		<TextView 
-			android:text="@+id/entrada" 
-		    android:layout_weight="4" android:id="@+id/entrada"/>
+			android:text="Saída" 
+			android:layout_width="fill_parent"/>
 		<TextView 
-			android:text="@+id/saida" 
-			android:layout_gravity="right" 
-			android:layout_weight="4" android:id="@+id/saida"/>
+			android:text="00:00" 
+			android:layout_gravity="right"
+			android:id="@+id/saida" />
 	</TableRow>
-
-
+	
+	<Button android:layout_width="wrap_content" android:id="@+id/btnSalvar" android:text="Salvar" android:layout_weight="4" android:layout_height="wrap_content"></Button>
 
 	<TableRow android:gravity="center">
-		<Button 
-			android:layout_height="wrap_content" 
-		    android:layout_width="wrap_content" 
-		    android:text="Salvar" 
-		    android:layout_weight="4" 
-		    android:id="@+id/btnSalvar"/>
 	</TableRow>
 
 </TableLayout>

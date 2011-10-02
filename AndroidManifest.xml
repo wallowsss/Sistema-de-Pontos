@@ -17,6 +17,10 @@
         
         <activity android:name=".listaRelat"
                   android:label="@string/app_name" />
+                  
+        
+        <activity android:name=".editaHora"
+                  android:label="@string/app_name" />
 
     </application>
 </manifest>

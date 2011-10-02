@@ -34,9 +34,7 @@ public class listaRelat extends ListActivity
             android.R.layout.simple_list_item_1, presidents));
     }    
  
-    public void onListItemClick(
-    ListView parent, View v,
-    int position, long id) {   
+    public void onListItemClick( ListView parent, View v, int position, long id) {   
         Toast.makeText(this, 
             "Entrada: " + presidents[position], 
             Toast.LENGTH_SHORT).show();

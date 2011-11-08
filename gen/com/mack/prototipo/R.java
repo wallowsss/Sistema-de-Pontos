@@ -18,7 +18,7 @@ public final class R {
         public static final int edita_tempo=0x7f050002;
         public static final int entrada=0x7f050003;
         public static final int entrada_edita=0x7f050000;
-        public static final int list_horario=0x7f050006;
+        public static final int list=0x7f050006;
         public static final int saida=0x7f050004;
         public static final int saida_edita=0x7f050001;
     }

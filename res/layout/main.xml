@@ -13,24 +13,26 @@
 	
 	<TableRow android:gravity="center">
 		<TextView 
-			android:text="Entrada             " 
+			android:text="Entrada" 
+			android:layout_gravity="left"
+			android:layout_width="wrap_content" />
+		<TextView 
+			android:text="00:00" 
+			android:id="@+id/entrada"
+			android:layout_gravity="left"
 			android:layout_width="fill_parent" />
-		<DigitalClock 
-			android:text="DigitalClock" 
-			android:id="@+id/entrada" 
-			android:layout_gravity="right" 
-			android:layout_width="wrap_content" 
-			android:layout_height="wrap_content"/>
 	</TableRow>
 	
 	<TableRow android:gravity="center">
 		<TextView 
 			android:text="Saída" 
-			android:layout_width="fill_parent"/>
+			android:layout_gravity="center"
+			android:layout_width="wrap_content"/>
 		<TextView 
 			android:text="00:00" 
-			android:layout_gravity="right"
-			android:id="@+id/saida" />
+			android:id="@+id/saida"
+			android:layout_gravity="left"
+			android:layout_width="fill_parent" />
 	</TableRow>
 	
 	<TableRow android:layout_height="11px">
@@ -42,11 +44,41 @@
 	
 	<TableRow android:gravity="center">
 		<Button 
-			android:layout_width="wrap_content" 
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"  
 			android:id="@+id/btnSalvar" 
-			android:text="Salvar" 
-			android:layout_weight="4" 
-			android:layout_height="wrap_content" />
+			android:layout_gravity="center"
+			android:text="Salvar"  />
 	</TableRow>
-
+	
+	<TableRow android:gravity="center">
+		<DigitalClock 
+			android:text="DigitalClock" 
+			android:id="@+id/horarioCelular" 
+			android:layout_gravity="left" 
+			android:layout_width="wrap_content" 
+			android:layout_height="wrap_content"
+			android:textSize="30sp"
+			android:visibility="invisible" />
+	</TableRow>	
+	
+	<TableRow android:gravity="center">
+		<Button 
+			android:layout_width="wrap_content" 
+			android:layout_height="wrap_content"
+			android:id="@+id/fechar" 
+			android:layout_gravity="right"
+			android:text="Fechar!" 
+			android:visibility="invisible" />
+	</TableRow>
+	
+	<TableRow android:gravity="center">
+		<ListView android:id="@+id/list"
+	        android:layout_width="wrap_content" 
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center"
+			android:visibility="invisible" />
+     </TableRow>
+	
 </TableLayout>
+

@@ -5,8 +5,10 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     >
-    <ListView android:id="@+id/list"
-        android:layout_width="fill_parent" 
-        android:layout_height="fill_parent" />    
+    <ListView android:id="@+id/list_teste"
+        android:layout_width="wrap_content" 
+        android:layout_height="wrap_content"
+        android:dividerHeight="1px"/>
  
 </LinearLayout>
+

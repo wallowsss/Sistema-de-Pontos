@@ -14,25 +14,25 @@
 	<TableRow android:gravity="center">
 		<TextView 
 			android:text="Entrada" 
-			android:layout_gravity="left"
+			android:layout_gravity="center"
 			android:layout_width="wrap_content" />
 		<TextView 
 			android:text="00:00" 
 			android:id="@+id/entrada"
 			android:layout_gravity="left"
-			android:layout_width="fill_parent" />
+			android:layout_width="wrap_content" />
 	</TableRow>
 	
 	<TableRow android:gravity="center">
 		<TextView 
 			android:text="Saída" 
 			android:layout_gravity="center"
-			android:layout_width="wrap_content"/>
+			android:layout_width="wrap_content" />
 		<TextView 
 			android:text="00:00" 
 			android:id="@+id/saida"
 			android:layout_gravity="left"
-			android:layout_width="fill_parent" />
+			android:layout_width="wrap_content" />
 	</TableRow>
 	
 	<TableRow android:layout_height="11px">
@@ -48,7 +48,7 @@
 			android:layout_height="wrap_content"  
 			android:id="@+id/btnSalvar" 
 			android:layout_gravity="center"
-			android:text="Salvar"  />
+			android:text="Salvar Apontamento"  />
 	</TableRow>
 	
 	<TableRow android:gravity="center">

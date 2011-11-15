@@ -15,14 +15,12 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
-
 import java.util.ArrayList;
 import java.util.Date;
 
 public class Principal extends Activity {
 
 	public static String nomeBanco = "DB_ANDROID_PONTO";
-    private SQLiteDatabase banco = null;
     private Button btnSalvar;
     private String data;
     private String hora_inicio;
@@ -42,20 +40,20 @@ public class Principal extends Activity {
         
         btnSalvar = (Button)  findViewById(R.id.btnSalvar);
         fechar = (Button) findViewById(R.id.fechar);
-        Entradatxt = (TextView)  findViewById(R.id.entrada);
+        horarioCelular = (DigitalClock) findViewById(R.id.horarioCelular);
+    	Entradatxt = (TextView)  findViewById(R.id.entrada);
         Saidatxt = (TextView)  findViewById(R.id.saida);
         Date dt = new Date();
         //Preenche dados basicos
-        data = dt.getDay() + "/" + dt.getMonth() + "/" + dt.getYear();
+        data = dt.toGMTString().substring(0, 11);//dt.getDate() + "/" + dt.getMonth() + "/" + dt.getYear();
         
         criarBanco();
         
         Entradatxt.setText(pesquisaHora(data, "inicio"));
         Saidatxt.setText(pesquisaHora(data, "final"));
-        //Toast.makeText(this, data, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, data, Toast.LENGTH_LONG).show();
 
-        if (Entradatxt.getText().equals("") || Saidatxt.getText().equals("")){
-        	horarioCelular = (DigitalClock) findViewById(R.id.horarioCelular);
+        if (Entradatxt.getText().equals("00:00") || Saidatxt.getText().equals("00:00")){
         	horarioCelular.setVisibility(View.VISIBLE);
         }
         
@@ -81,11 +79,11 @@ public class Principal extends Activity {
     }
     
     public boolean criarBanco() {
+    	SQLiteDatabase banco = null;
         boolean aux = true;
         try {
-            // cria o banco de dados caso ele não exista e abre a conexao
+            // cria o banco de dados caso ele nao exista e abre a conexao
             banco = openOrCreateDatabase(nomeBanco, 0, null);
-            //SQL que cria o banco de dados 
             //banco.execSQL("DROP TABLE IF EXISTS horario");
             banco.execSQL("CREATE TABLE IF NOT EXISTS horario (data TEXT PRIMARY KEY, hora_inicio TEXT, hora_final TEXT);"); 
             //Toast.makeText(this, "Sucesso na criacao do BD", Toast.LENGTH_LONG).show();
@@ -99,13 +97,15 @@ public class Principal extends Activity {
     }
     
     public boolean insert(Horario horario) {
-    	boolean aux = true;
+    	SQLiteDatabase banco = null;
+        boolean aux = true;
     	try {
     		banco = openOrCreateDatabase(nomeBanco, 0, null);
     		banco.execSQL("INSERT INTO horario (data, hora_inicio, hora_final) VALUES ('"+ 
             		horario.getData() + "','" + horario.getHoraInicial() + "','" + horario.getHoraFinal() + "')");
+    		banco.close();
     		Entradatxt.setText(horario.getHoraInicial());
-            Toast.makeText(this, "Horario inicial atualizado",Toast.LENGTH_LONG).show();
+    		Toast.makeText(this, "Horario inicial atualizado",Toast.LENGTH_LONG).show();
         } catch (SQLiteException e) {
         	if (e.getMessage().contains("column data is not unique")){
         		aux=update(horario);
@@ -114,42 +114,42 @@ public class Principal extends Activity {
      	    	Toast.makeText(this, "Exception "+ e.getMessage(), 
             		Toast.LENGTH_LONG).show();
      	    }
-        } finally {
-        	banco.close();
         }
         return aux;
     }
     
     public boolean update(Horario horario){
-        boolean aux = true;
+    	SQLiteDatabase banco = null;
+    	boolean aux = true;
         try{
             banco = openOrCreateDatabase(nomeBanco, 0, null);
             banco.execSQL("UPDATE horario SET hora_final = '" + horario.getHoraFinal()
             		+ "' WHERE data = '" + horario.getData() + "'");
-            Saidatxt.setText(horario.getHoraFinal());
-            horarioCelular.setVisibility(View.INVISIBLE);
+        	banco.close();
+        	Saidatxt.setText(horario.getHoraFinal());
+        	if (horarioCelular.getVisibility() == View.VISIBLE){ 
+            	horarioCelular.setVisibility(View.INVISIBLE);
+            }
             Toast.makeText(this, "Horario final atualizado",Toast.LENGTH_LONG).show();
         }catch(SQLiteException e){
             aux=false;
             Toast.makeText(this, "Erro: " + e.getMessage(), 
             		Toast.LENGTH_LONG).show();
-        } finally {
-        	banco.close();
         }
         return aux;
     }
     
     private String pesquisaHora(String data, String tipo){
-    	SQLiteDatabase bd = null;
+    	SQLiteDatabase banco = null;
     	Cursor c = null;
     	String hora = "00:00";
         try {
-            bd = openOrCreateDatabase(Principal.nomeBanco, 0, null);
+            banco = openOrCreateDatabase(Principal.nomeBanco, 0, null);
             String where = "data = \"" + data + "\"";
             if (tipo.equals("inicio")){
-              c = bd.query(true, "horario", new String[]{"data","hora_inicio"}, where, null, null, null, null, null);
+              c = banco.query(true, "horario", new String[]{"data","hora_inicio"}, where, null, null, null, null, null);
             } else {
-            	c = bd.query(true, "horario", new String[]{"data","hora_final"}, where, null, null, null, null, null);
+            	c = banco.query(true, "horario", new String[]{"data","hora_final"}, where, null, null, null, null, null);
             }
             if (c.moveToNext()){
             	if (tipo.equals("inicio")){
@@ -163,7 +163,7 @@ public class Principal extends Activity {
             		Toast.LENGTH_LONG).show();
         } finally {
             c.close();
-            bd.close();
+            banco.close();
         }
         return hora; 
     }
@@ -181,7 +181,7 @@ public class Principal extends Activity {
            c = bd.query(true, "horario", new String[]{"data","hora_inicio","hora_final"}, null, null, null, null, null, null);   
            ArrayList<String> result = new ArrayList<String>();        
            while(c.moveToNext()){
-             result.add(c.getString(c.getColumnIndex("data")) + ": \t\t\t" + 
+             result.add(c.getString(c.getColumnIndex("data")) + ":\t" + 
                     c.getString(c.getColumnIndex("hora_inicio")) + " <-> " +
                     c.getString(c.getColumnIndex("hora_final")));
            }

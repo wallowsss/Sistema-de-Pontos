@@ -7,43 +7,72 @@
 	<TableRow android:layout_height="11px">
 		<TextView 
 			android:text=""
-			android:textSize="30sp"
 			android:layout_width="fill_parent"/>
 	</TableRow>
 	
+	<TableRow android:gravity="left">
+		<TextView 
+			android:text="\t\tEntrada" 
+			android:layout_gravity="left"
+			android:layout_width="wrap_content" />
+	</TableRow>
+
 	<TableRow android:gravity="center">
 		<TextView 
-			android:text="Entrada             " 
-			android:layout_width="fill_parent" />
-		<TextView 
 			android:text="00:00" 
-			android:layout_gravity="right" 
+			android:textSize="30sp"
+			android:layout_gravity="center" 
 		    android:id="@+id/entrada_edita"/>
 	</TableRow>
 	
 	<TableRow android:gravity="center">
-		<TextView 
-			android:text="Saída" 
-			android:layout_width="fill_parent"/>
-		<TextView 
-			android:text="00:00" 
-			android:layout_gravity="right"
-			android:id="@+id/saida_edita" />
+		<TimePicker 
+			android:id="@+id/edita_tempo_entrada" 
+			android:layout_width="wrap_content" 
+			android:layout_height="wrap_content" />
 	</TableRow>
-
+	
 	<TableRow android:layout_height="11px">
 		<TextView 
 			android:text=""
+			android:layout_width="fill_parent"/>
+	</TableRow>
+	
+	<TableRow android:gravity="left">
+		<TextView 
+			android:text="\t\tSaída" 
+			android:layout_gravity="left"
+			android:layout_width="wrap_content"/>
+	</TableRow>
+	
+	<TableRow android:gravity="center">
+		<TextView 
+			android:text="00:00" 
 			android:textSize="30sp"
+			android:layout_gravity="center"
+			android:id="@+id/saida_edita" />
+	</TableRow>
+
+	<TableRow android:gravity="center">
+		<TimePicker 
+			android:id="@+id/edita_tempo_saida" 
+			android:layout_width="wrap_content" 
+			android:layout_height="wrap_content" />
+	</TableRow>
+	
+	<TableRow android:layout_height="11px">
+		<TextView 
+			android:text=""
 			android:layout_width="fill_parent"/>
 	</TableRow>
 	
 	<TableRow android:gravity="center">
-	<TimePicker 
-		android:id="@+id/edita_tempo" 
-		android:layout_width="wrap_content" 
-		android:layout_height="wrap_content"/>
+		<Button 
+			android:layout_width="wrap_content" 
+			android:layout_height="wrap_content"
+			android:id="@+id/atualizar" 
+			android:layout_gravity="center"
+			android:text="Atualizar" />
 	</TableRow>
-	
 
 </TableLayout>

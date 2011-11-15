@@ -7,38 +7,57 @@
 	<TableRow android:layout_height="11px">
 		<TextView 
 			android:text=""
-			android:textSize="30sp"
 			android:layout_width="fill_parent"/>
 	</TableRow>
 	
-	<TableRow android:gravity="center">
+	<TableRow android:gravity="center"
+			  android:layout_width="wrap_content" 
+			  android:layout_height="wrap_content">
+		<DigitalClock 
+			android:text="DigitalClock" 
+			android:id="@+id/horarioCelular" 
+			android:layout_gravity="center" 
+			android:layout_width="wrap_content" 
+			android:layout_height="wrap_content"
+			android:textSize="30sp"
+			android:visibility="invisible" />
+	</TableRow>	
+	
+	<TableRow android:gravity="left">
 		<TextView 
-			android:text="Entrada" 
-			android:layout_gravity="center"
-			android:layout_width="wrap_content" />
-		<TextView 
-			android:text="00:00" 
-			android:id="@+id/entrada"
+			android:text="\t\tEntrada" 
 			android:layout_gravity="left"
 			android:layout_width="wrap_content" />
 	</TableRow>
 	
 	<TableRow android:gravity="center">
 		<TextView 
-			android:text="Saída" 
+			android:text="00:00" 
+			android:id="@+id/entrada"
+			android:textSize="30sp"
 			android:layout_gravity="center"
 			android:layout_width="wrap_content" />
+	</TableRow>
+	
+	<TableRow android:gravity="center">
+		<TextView 
+			android:text="\t\tSaída" 
+			android:layout_gravity="left"
+			android:layout_width="wrap_content" />
+	</TableRow>
+	
+	<TableRow android:gravity="center">
 		<TextView 
 			android:text="00:00" 
 			android:id="@+id/saida"
-			android:layout_gravity="left"
+			android:textSize="30sp"
+			android:layout_gravity="center"
 			android:layout_width="wrap_content" />
 	</TableRow>
 	
 	<TableRow android:layout_height="11px">
 		<TextView 
 			android:text=""
-			android:textSize="30sp"
 			android:layout_width="fill_parent"/>
 	</TableRow>
 	
@@ -50,17 +69,6 @@
 			android:layout_gravity="center"
 			android:text="Salvar Apontamento"  />
 	</TableRow>
-	
-	<TableRow android:gravity="center">
-		<DigitalClock 
-			android:text="DigitalClock" 
-			android:id="@+id/horarioCelular" 
-			android:layout_gravity="left" 
-			android:layout_width="wrap_content" 
-			android:layout_height="wrap_content"
-			android:textSize="30sp"
-			android:visibility="invisible" />
-	</TableRow>	
 	
 	<TableRow android:gravity="center">
 		<Button 

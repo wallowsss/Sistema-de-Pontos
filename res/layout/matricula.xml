@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent" >
+	
+	<TableRow android:layout_height="11px">
+		<TextView 
+			android:text=""
+			android:layout_width="fill_parent"/>
+	</TableRow>
+	
+	<TableRow android:gravity="left">
+		<TextView 
+			android:text="\t\tInsira a matricula:" 
+			android:layout_gravity="left"
+			android:layout_width="wrap_content" />
+	</TableRow>
+	
+	<TableRow android:gravity="center">
+		<EditText 
+		    android:text="" 
+		    android:id="@+id/edita_matricula"
+			android:textSize="30sp"
+			android:layout_gravity="center"  
+		    android:inputType="number" 
+		    android:layout_weight="4"/>
+	</TableRow>
+	
+	<TableRow android:gravity="center">
+		<Button 
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"  
+			android:id="@+id/btnGravarID" 
+			android:layout_gravity="center"
+			android:text="Gravar Matricula"  />
+	</TableRow>
+	
+</TableLayout>
+

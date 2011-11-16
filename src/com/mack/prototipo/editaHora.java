@@ -1,5 +1,6 @@
 package com.mack.prototipo;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import android.app.Activity;
 import android.database.Cursor;
@@ -29,7 +30,8 @@ public class editaHora extends Activity {
         String hora_inicio;
         String hora_final;
         final String data;
-        Date dt = new Date();
+        Date dt = new Date( System.currentTimeMillis());
+        SimpleDateFormat formatador = new SimpleDateFormat("dd/MM/yyyy"); 
         HoraEntrada = (TextView) findViewById(R.id.entrada_edita);
         EditaEntrada = (TimePicker) findViewById(R.id.edita_tempo_entrada);
         HoraSaida = (TextView) findViewById(R.id.saida_edita);
@@ -38,7 +40,7 @@ public class editaHora extends Activity {
         
         EditaEntrada.setIs24HourView(true);
         EditaSaida.setIs24HourView(true);
-        data = dt.toGMTString().substring(0, 11);
+        data =formatador.format(dt);
         hora_inicio = pesquisaHora(data, "inicio");
         hora_final = pesquisaHora(data, "final");
         
@@ -120,7 +122,7 @@ public class editaHora extends Activity {
         return aux;
     }
 	
-	private String formataData(Integer hora, Integer minuto){
+	public static String formataData(Integer hora, Integer minuto){
 		String retorno = "";
 		if (hora < 10){
 			retorno = "0"+hora+":";

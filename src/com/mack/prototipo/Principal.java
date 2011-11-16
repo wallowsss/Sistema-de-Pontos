@@ -1,6 +1,13 @@
 package com.mack.prototipo;
 
+import java.rmi.*;
+import java.util.ArrayList;
+import java.util.Date;
 import android.app.Activity;
+import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,12 +18,7 @@ import android.widget.DigitalClock;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
-import java.util.ArrayList;
-import java.util.Date;
+import build.classes.ws.*;
 
 public class Principal extends Activity {
 
@@ -44,11 +46,21 @@ public class Principal extends Activity {
     	Entradatxt = (TextView)  findViewById(R.id.entrada);
         Saidatxt = (TextView)  findViewById(R.id.saida);
         Date dt = new Date();
+       // SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        //dt = sdf.parse(d);
+       // SimpleDateFormat dt1 = new SimpleDateFormat();
+       // dt1.getDateFormatSymbols();
         //Preenche dados basicos
         data = dt.toGMTString().substring(0, 11);//dt.getDate() + "/" + dt.getMonth() + "/" + dt.getYear();
         
         criarBanco();
         
+        try {
+			sync();
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+                
         Entradatxt.setText(pesquisaHora(data, "inicio"));
         Saidatxt.setText(pesquisaHora(data, "final"));
         Toast.makeText(this, data, Toast.LENGTH_LONG).show();
@@ -94,6 +106,14 @@ public class Principal extends Activity {
             		Toast.LENGTH_LONG).show();
         }
         return aux;
+    }
+    
+    public void sync() throws RemoteException{
+    	
+
+        TransmissaoProxy t = new TransmissaoProxy();
+        t.gravarRegistroXML("987", "15/11/2011 23:14:26", "E");
+        
     }
     
     public boolean insert(Horario horario) {

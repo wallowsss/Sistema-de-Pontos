@@ -1,13 +1,11 @@
 package com.mack.prototipo;
 
-import java.rmi.*;
 import java.util.ArrayList;
 import java.util.Date;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
+import android.database.sqlite.*;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,7 +16,11 @@ import android.widget.DigitalClock;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-import build.classes.ws.*;
+
+import org.ksoap2.SoapEnvelope;
+import org.ksoap2.serialization.SoapObject;
+import org.ksoap2.serialization.SoapSerializationEnvelope;
+import org.ksoap2.transport.HttpTransportSE;
 
 public class Principal extends Activity {
 
@@ -40,6 +42,7 @@ public class Principal extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         
+        
         btnSalvar = (Button)  findViewById(R.id.btnSalvar);
         fechar = (Button) findViewById(R.id.fechar);
         horarioCelular = (DigitalClock) findViewById(R.id.horarioCelular);
@@ -55,15 +58,11 @@ public class Principal extends Activity {
         
         criarBanco();
         
-        try {
-			sync();
-		} catch (RemoteException e) {
-			e.printStackTrace();
-		}
+        sync();
                 
         Entradatxt.setText(pesquisaHora(data, "inicio"));
         Saidatxt.setText(pesquisaHora(data, "final"));
-        Toast.makeText(this, data, Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, data, Toast.LENGTH_LONG).show();
 
         if (Entradatxt.getText().equals("00:00") || Saidatxt.getText().equals("00:00")){
         	horarioCelular.setVisibility(View.VISIBLE);
@@ -108,12 +107,51 @@ public class Principal extends Activity {
         return aux;
     }
     
-    public void sync() throws RemoteException{
+    public void sync(){
     	
+    	/*TransmissaoService tService = new TransmissaoServiceLocator();
+    	Transmissao t = tService.getTransmissao();
+    	
+        //TransmissaoProxy t = new TransmissaoProxy();
+        if (t.gravarRegistroXML("987", "15/11/2011 23:14:26", "E")){
+        	Toast.makeText(this, "Sincronização Concluida", Toast.LENGTH_LONG).show();
+        }*/
+    	
+    	final String NAMESPACE = "http://zaboroski.no-ip.info:9080/PontoMobile/services/Transmissao";
+    	String URL = "http://zaboroski.no-ip.info:9080/PontoMobile/services/Transmissao";
+    	final String METHOD_NAME = "gravarRegistroXML";
+    	final String SOAP_ACTION = "http://zaboroski.no-ip.info:9080/PontoMobile/services/Transmissao#gravarRegistroXML";
+    	
+    	//Criando os parâmetros de entrada
+    	SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+    	request.addProperty("matricula", "987");
+    	request.addProperty("horario", "15/11/2011 23:14:26");
+    	request.addProperty("tipo", "E");
 
-        TransmissaoProxy t = new TransmissaoProxy();
-        t.gravarRegistroXML("987", "15/11/2011 23:14:26", "E");
-        
+    	
+    	//Envelope SOAP
+    	SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+    	envelope.setOutputSoapObject(request);
+
+    	HttpTransportSE androidHttpTransport = new HttpTransportSE(URL);
+
+    	try {
+    	   //Chamada ao WS
+    	   androidHttpTransport.call(SOAP_ACTION, envelope);
+
+    	   //String com o retorno
+    	   Boolean resultsRequestSOAP = (Boolean) envelope.getResponse();
+    	   //SoapObject resultsRequestSOAP=(SoapObject)envelope.bodyIn;
+    	   if (resultsRequestSOAP.equals("true")) {
+    		   Toast.makeText(this, "Sincronização Concluida", Toast.LENGTH_LONG).show();
+    	   } else{
+    		   Toast.makeText(this, "Sincronização não Concluida", Toast.LENGTH_LONG).show();
+    	   }
+    	} catch (Exception e) {
+    	   //showDialog
+    		Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+    	}
+    	
     }
     
     public boolean insert(Horario horario) {

@@ -304,7 +304,7 @@ public class Principal extends Activity {
             mnu2.setAlphabeticShortcut('b');
             //mnu2.setIcon(R.drawable.ic_popup_reminder);            
         }
-        MenuItem mnu3 = menu.add(0, 2, 2, "Atualizar");
+        MenuItem mnu3 = menu.add(0, 2, 2, "Sincronizar");
         {
             mnu3.setAlphabeticShortcut('c');
             //mnu2.setIcon(R.drawable.ic_popup_reminder);            

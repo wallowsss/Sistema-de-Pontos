@@ -107,8 +107,8 @@ public class editaHora extends Activity {
         try{
             
             banco = openOrCreateDatabase(Principal.nomeBanco, 0, null);
-            banco.execSQL("UPDATE horario SET hora_inicio = '" + horario.getHoraInicial()
-            		+ "', hora_final = '" + horario.getHoraFinal() + "' WHERE data = '" + horario.getData() + "'");
+            banco.execSQL("UPDATE horario SET hora_inicio = '" + horario.getHoraInicial() + "', hora_final = '" 
+            		+ horario.getHoraFinal() + "', status = 'P' WHERE data = '" + horario.getData() + "'");
         	banco.close();
         	HoraEntrada.setText(horario.getHoraInicial());
         	HoraSaida.setText(horario.getHoraFinal());

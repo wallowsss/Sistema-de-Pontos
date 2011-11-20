@@ -68,7 +68,8 @@ public class Principal extends Activity {
         if (Entradatxt.getText().equals("00:00") || Saidatxt.getText().equals("00:00")){
         	horarioCelular.setVisibility(View.VISIBLE);
         }
-        if (!Entradatxt.getText().equals("00:00") && !Saidatxt.getText().equals("00:00")){
+        if (!(Entradatxt.getText().equals("00:00")||Entradatxt.getText().equals("")) && 
+        		!(Saidatxt.getText().equals("00:00")||Saidatxt.getText().equals(""))){
         	btnSalvar.setEnabled(false);
         }
         
@@ -125,8 +126,8 @@ public class Principal extends Activity {
         boolean aux = true;
     	try {
     		banco = openOrCreateDatabase(nomeBanco, 0, null);
-    		banco.execSQL("INSERT INTO horario (data, hora_inicio, hora_final, status) VALUES ('"+ 
-            		horario.getData() + "','" + horario.getHoraInicial() + "','" + horario.getHoraFinal() + "', 'P')");
+    		banco.execSQL("INSERT INTO horario (data, hora_inicio, status) VALUES ('"+ 
+            		horario.getData() + "','" + horario.getHoraInicial() + "', 'P')");
     		banco.close();
     		Entradatxt.setText(horario.getHoraInicial());
     		Toast.makeText(this, "Horario inicial atualizado",Toast.LENGTH_LONG).show();
@@ -148,7 +149,7 @@ public class Principal extends Activity {
         try{
             banco = openOrCreateDatabase(nomeBanco, 0, null);
             banco.execSQL("UPDATE horario SET hora_final = '" + horario.getHoraFinal()
-            		+ "' WHERE data = '" + horario.getData() + "'");
+            		+ "', status='P' WHERE data = '" + horario.getData() + "'");
         	banco.close();
         	Saidatxt.setText(horario.getHoraFinal());
         	if (horarioCelular.getVisibility() == View.VISIBLE){ 
@@ -244,6 +245,7 @@ public class Principal extends Activity {
     	SQLiteDatabase banco = null;
     	Cursor c = null;
     	String where = "status = 'P'";
+    	Boolean vbErro=false;
         
     	final String NAMESPACE = "http://zaboroski.no-ip.info:9080/PontoMobile/services/Transmissao";
     	String URL = "http://zaboroski.no-ip.info:9080/PontoMobile/services/Transmissao";
@@ -277,17 +279,21 @@ public class Principal extends Activity {
     	    				   c.getString(c.getColumnIndex("data")) + "'");
     	    	   }
     	    	} catch (Exception e) {
+    	    		vbErro = false;
     	    		Toast.makeText(this, "Sincronização não Concluida" + e.getMessage(), 
     	    				Toast.LENGTH_LONG).show();
     	    	}
             }
         } catch (SQLiteException e) {        
-     	   Toast.makeText(this, "Falha na pesquisa no BD: "+e.getMessage(), 
+        	vbErro = false;
+        	Toast.makeText(this, "Falha na pesquisa no BD: "+e.getMessage(), 
             		Toast.LENGTH_LONG).show();
         } finally {
             c.close();
             banco.close();
-            Toast.makeText(this, "Sincronização Concluida", Toast.LENGTH_LONG).show();
+            if (!vbErro){
+            	Toast.makeText(this, "Sincronização Concluida", Toast.LENGTH_LONG).show();
+            }
         }
     }
     

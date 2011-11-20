@@ -43,7 +43,7 @@ public class Matricula extends Activity {
     		banco.close();
     		Toast.makeText(this, "Matricula cadastrada",Toast.LENGTH_LONG).show();
         } catch (SQLiteException e) {
-        	Toast.makeText(this, "Exception "+ e.getMessage(), 
+        	Toast.makeText(this, "Matricula j‡ cadastrada. Efetuando login.", 
             		Toast.LENGTH_LONG).show();
         }
 	}
